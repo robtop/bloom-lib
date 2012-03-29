@@ -7,9 +7,9 @@ public final class ShaderLoader {
 
 	static final public ShaderProgram createShader(String vertexName,
 			String fragmentName) {
-		String vertexShader = FileUtils.getContent("shaders/" + vertexName
+		String vertexShader = FileUtils.getContent("testProjectShaders/" + vertexName
 				+ ".vertex");
-		String fragmentShader = FileUtils.getContent("shaders/" + fragmentName
+		String fragmentShader = FileUtils.getContent("testProjectShaders/" + fragmentName
 				+ ".fragment");
 		ShaderProgram.pedantic = false;		
 		ShaderProgram shader = new ShaderProgram(vertexShader, fragmentShader);
