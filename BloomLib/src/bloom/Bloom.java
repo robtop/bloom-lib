@@ -185,9 +185,9 @@ public class Bloom {
 				"bloom/gaussian");
 
 		setSize(FBO_W, FBO_H);
-		setBloomIntesity(1.3f);
+		setBloomIntesity(2.5f);
 		setOriginalIntesity(0.8f);
-		setTreshold(0.277f);
+		setTreshold(0.5f);
 	}
 
 	
