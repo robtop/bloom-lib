@@ -1,0 +1,14 @@
+#ifdef GL_ES
+#define LOWP lowp
+#define MED mediump
+precision mediump float;
+#else
+#define LOWP  
+#define MED 
+#endif
+
+varying vec3 v_normals;
+void main()
+{	 
+  gl_FragColor = vec4((v_normals+1.0)*0.5, gl_FragCoord.z);
+}
