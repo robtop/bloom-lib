@@ -11,7 +11,7 @@ import com.badlogic.gdx.graphics.VertexAttributes.Usage;
 import com.badlogic.gdx.graphics.glutils.FrameBuffer;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 
-/**
+/** Bloomlib allow easy but efficient way to add bloom effect as post process effect
  * @author kalle_h
  * 
  */
@@ -190,8 +190,9 @@ public class Bloom {
 		setTreshold(0.5f);
 	}
 
-	
-	/** Set clearing color for capturing buffer
+	/**
+	 * Set clearing color for capturing buffer
+	 * 
 	 * @param r
 	 * @param g
 	 * @param b
@@ -276,7 +277,7 @@ public class Bloom {
 		{
 			tresholdShader.begin();
 			{
-			//	tresholdShader.setUniformi("u_texture0", 0);
+				// tresholdShader.setUniformi("u_texture0", 0);
 				fullScreenQuad.render(tresholdShader, GL20.GL_TRIANGLE_FAN, 0,
 						4);
 			}
@@ -293,7 +294,7 @@ public class Bloom {
 			{
 				blurShader.begin();
 				{
-				//	blurShader.setUniformi("u_texture", 0);
+					// blurShader.setUniformi("u_texture", 0);
 					blurShader.setUniformf("dir", 1f, 0f);
 					fullScreenQuad.render(blurShader, GL20.GL_TRIANGLE_FAN, 0,
 							4);
@@ -308,7 +309,7 @@ public class Bloom {
 			{
 				blurShader.begin();
 				{
-				//	blurShader.setUniformi("u_texture", 0);
+					// blurShader.setUniformi("u_texture", 0);
 					blurShader.setUniformf("dir", 0f, 1f);
 
 					fullScreenQuad.render(blurShader, GL20.GL_TRIANGLE_FAN, 0,
@@ -320,8 +321,13 @@ public class Bloom {
 		}
 	}
 
-	/** set intensity for bloom. higher mean more brightening for spots that are over treshold 
+	/**
+	 * set intensity for bloom. higher mean more brightening for spots that are
+	 * over treshold
+	 * 
 	 * @param intensity
+	 *            multiplier for blurred texture in combining phase. must be
+	 *            positive.
 	 */
 	public void setBloomIntesity(float intensity) {
 		bloomIntensity = intensity;
@@ -332,6 +338,14 @@ public class Bloom {
 		bloomShader.end();
 	}
 
+	/**
+	 * set intensity for original scene. under 1 mean darkening and over 1 means
+	 * lightening
+	 * 
+	 * @param intensity
+	 *            multiplier for captured texture in combining phase. must be
+	 *            positive.
+	 */
 	public void setOriginalIntesity(float intensity) {
 		originalIntensity = intensity;
 		bloomShader.begin();
@@ -341,12 +355,18 @@ public class Bloom {
 		bloomShader.end();
 	}
 
+	/**
+	 * Treshold for bright parts. everything under treshold is clamped to 0
+	 * 
+	 * @param treshold
+	 *            must be in range 0..1
+	 */
 	public void setTreshold(float treshold) {
 		this.treshold = treshold;
 		tresholdShader.begin();
 		{
 			tresholdShader.setUniformf("treshold", treshold);
-			tresholdShader.setUniformf("tresholdD", (1f / (1-treshold)));
+			tresholdShader.setUniformf("tresholdD", (1f / (1 - treshold)));
 		}
 		tresholdShader.end();
 	}

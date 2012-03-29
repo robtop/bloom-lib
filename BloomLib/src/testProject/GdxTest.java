@@ -29,12 +29,9 @@ public class GdxTest extends ApplicationAdapter {
 	public void render() {
 		logger.log();
 		camController.update(Gdx.graphics.getDeltaTime());
-
-		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT | GL10.GL_DEPTH_BUFFER_BIT);
 		Gdx.gl.glEnable(GL10.GL_DEPTH_TEST);
 		Gdx.gl.glEnable(GL10.GL_CULL_FACE);
-		Gdx.gl.glCullFace(GL10.GL_BACK);
-		
+		Gdx.gl.glCullFace(GL10.GL_BACK);		
 		Gdx.gl.glDepthMask(true);
 
 		bloom.capture();
