@@ -1,0 +1,73 @@
+#ifdef GL_ES
+#define LOWP lowp
+precision highp float;
+#else
+#define LOWP  
+#endif
+
+uniform sampler2D u_texture;
+uniform vec3 lights[3];
+uniform vec3 col[3];
+uniform vec3 camPos;
+
+varying vec3 v_pos;
+varying vec2 v_texCoords;
+varying vec3 v_normal;
+
+const float shininessFactor = 15.0;
+const vec3 specularColor = vec3(0.275, 0.275, 0.3);
+const vec3 ambient = vec3(0.16, 0.18, 0.16);
+const vec3 v_color = vec3(0.35, 0.35, 0.35);
+
+void main()
+{   
+  
+
+	//texture + combined light
+	vec3 tex = texture2D(u_texture, v_texCoords).rgb;
+	
+	
+	vec3 light = vec3(0.0);
+	
+
+	vec3 surfaceNormal = normalize( v_normal );
+	float spec = dot(tex,tex);
+	tex*= v_color;
+	for (int i=0; i < 3;i++){
+	
+
+	//intensity	
+  	vec3 differ = (vec3(lights[i] - v_pos));  	
+  	float dist = dot(differ,differ);
+  	vec3 lightDirection = differ * inversesqrt(dist);
+    float intensity = 1.0 / (1.0 +  0.35 * sqrt(dist));
+        
+    //diffuse
+    
+    float cosAngIncidence = dot(surfaceNormal, lightDirection);
+    cosAngIncidence = clamp(cosAngIncidence, 0.0, 1.0);
+
+
+	//specular
+	vec3 viewDirection = camPos;
+	
+	vec3 halfAngle = normalize(lightDirection + viewDirection);	
+	float blinnTerm = dot(surfaceNormal, halfAngle);	
+	blinnTerm = clamp(blinnTerm, 0.0, 1.0);
+	blinnTerm = cosAngIncidence != 0.0 ? blinnTerm : 0.0;
+	blinnTerm = pow(blinnTerm, shininessFactor);
+	
+	light += intensity * (spec*specularColor * blinnTerm + cosAngIncidence*tex*col[i]);
+	}
+
+	gl_FragColor = vec4( light + (ambient * tex) , 1.0);
+      
+}
+//vec3 reflectDir = reflect(-lightDirection, surfaceNormal);	
+//	float phongTerm = dot(viewDirection, reflectDir);	
+//	phongTerm = clamp(phongTerm, 0.0, 1.0);
+//	phongTerm = cosAngIncidence != 0.0 ? phongTerm : 0.0;
+//	phongTerm = pow(phongTerm, shininessFactor);
+
+//gl_FragColor =  vec4( (specularColor *(intensity * blinnTerm))+ (tex * (intensity * cosAngIncidence)) +
+ //   (ambient * tex) ,1.0);
