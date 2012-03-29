@@ -21,11 +21,3 @@ void main()
     original = original *  (vec4(1.0) - bloom);	 	
  	gl_FragColor =  original + bloom; 	
 }
-//const float BloomSaturation = 0.65;
-//const float OriginalSaturation = 1.0;
-//const vec3 GRAYSCALE = vec3(0.3, 0.59, 0.11);
-//gl_FragColor = texture2D(u_texture1, v_texCoords);//debug bloompart
-//float grey = dot(bloom.rgb, GRAYSCALE);
-//bloom = clamp((mix(vec4(grey, grey, grey, bloom.a), bloom, BloomSaturation) * BloomIntensity), 0.0, 1.0);
-//grey = dot(original.rgb, GRAYSCALE);    
-//original = mix(vec4(grey, grey, grey, original.a), original, OriginalSaturation) * OriginalIntensity;
