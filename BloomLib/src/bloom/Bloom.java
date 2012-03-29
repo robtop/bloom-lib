@@ -276,7 +276,7 @@ public class Bloom {
 		{
 			tresholdShader.begin();
 			{
-				tresholdShader.setUniformi("u_texture0", 0);
+			//	tresholdShader.setUniformi("u_texture0", 0);
 				fullScreenQuad.render(tresholdShader, GL20.GL_TRIANGLE_FAN, 0,
 						4);
 			}
@@ -293,7 +293,7 @@ public class Bloom {
 			{
 				blurShader.begin();
 				{
-					blurShader.setUniformi("u_texture", 0);
+				//	blurShader.setUniformi("u_texture", 0);
 					blurShader.setUniformf("dir", 1f, 0f);
 					fullScreenQuad.render(blurShader, GL20.GL_TRIANGLE_FAN, 0,
 							4);
@@ -308,7 +308,7 @@ public class Bloom {
 			{
 				blurShader.begin();
 				{
-					blurShader.setUniformi("u_texture", 0);
+				//	blurShader.setUniformi("u_texture", 0);
 					blurShader.setUniformf("dir", 0f, 1f);
 
 					fullScreenQuad.render(blurShader, GL20.GL_TRIANGLE_FAN, 0,

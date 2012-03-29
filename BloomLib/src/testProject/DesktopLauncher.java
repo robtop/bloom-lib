@@ -10,7 +10,7 @@ public class DesktopLauncher {
 		config.title = "curling";
 		config.width = 800;
 		config.height = 480;
-		config.samples = 2;
+		config.samples = 8;
 		config.vSyncEnabled = false;
 		config.useCPUSynch = false;
 		config.useGL20 = true;
