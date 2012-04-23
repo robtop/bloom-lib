@@ -11,7 +11,10 @@ import com.badlogic.gdx.graphics.VertexAttributes.Usage;
 import com.badlogic.gdx.graphics.glutils.FrameBuffer;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 
-/** Bloomlib allow easy but efficient way to add bloom effect as post process effect
+/**
+ * Bloomlib allow easy but efficient way to add bloom effect as post process
+ * effect
+ * 
  * @author kalle_h
  * 
  */
@@ -170,19 +173,19 @@ public class Bloom {
 
 		fullScreenQuad = createFullScreenQuad();
 
-		bloomShader = ShaderLoader.createShader("bloom/screenspace",
-				"bloom/bloom");
+		bloomShader = ShaderLoader.createShader("screenspace",
+				"bloom");
 
 		if (useAlphaChannelAsMask) {
-			tresholdShader = ShaderLoader.createShader("bloom/screenspace",
-					"bloom/maskedtreshold");
+			tresholdShader = ShaderLoader.createShader("screenspace",
+					"maskedtreshold");
 		} else {
-			tresholdShader = ShaderLoader.createShader("bloom/screenspace",
-					"bloom/treshold");
+			tresholdShader = ShaderLoader.createShader("screenspace",
+					"treshold");
 		}
 
-		blurShader = ShaderLoader.createShader("bloom/blurspace",
-				"bloom/gaussian");
+		blurShader = ShaderLoader.createShader("blurspace",
+				"gaussian");
 
 		setSize(FBO_W, FBO_H);
 		setBloomIntesity(2.5f);
