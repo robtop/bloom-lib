@@ -63,7 +63,7 @@ public class GdxTest extends ApplicationAdapter {
 		texture.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 		shader = ShaderLoader.createShader("default", "default");
 
-		bloom = new Bloom(256, 256, true, true, true);
+		bloom = new Bloom(256, 256, true, false, true);
 	}
 
 	public void dispose() {
