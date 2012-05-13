@@ -1,5 +1,7 @@
 package bloom;
 
+import bloom.bloomshaders.BloomShaderLoader;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.GL20;
@@ -181,18 +183,18 @@ public class Bloom {
 		fullScreenQuad = createFullScreenQuad();
 		final String alpha = useBlending ? "alpha_" : "";
 
-		bloomShader = ShaderLoader.createShader("screenspace",
+		bloomShader = BloomShaderLoader.createShader("screenspace",
 				alpha + "bloom");
 
 		if (useAlphaChannelAsMask) {
-			tresholdShader = ShaderLoader.createShader("screenspace",
+			tresholdShader = BloomShaderLoader.createShader("screenspace",
 					"maskedtreshold");
 		} else {
-			tresholdShader = ShaderLoader.createShader("screenspace",
+			tresholdShader = BloomShaderLoader.createShader("screenspace",
 					alpha + "treshold");
 		}
 
-		blurShader = ShaderLoader.createShader("blurspace",
+		blurShader = BloomShaderLoader.createShader("blurspace",
 				alpha + "gaussian");
 
 		setSize(FBO_W, FBO_H);
