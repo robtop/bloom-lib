@@ -58,13 +58,20 @@ public class Bloom {
 	private float r = 0f;
 	private float g = 0f;
 	private float b = 0f;
-	private float a = 0f;
+	private float a = 1f;
 	private boolean disposeFBO = true;
 
 	/**
 	 * IMPORTANT NOTE CALL THIS WHEN RESUMING
 	 */
 	public void resume() {
+		bloomShader.begin();
+		{
+			bloomShader.setUniformi("u_texture0", 0);
+			bloomShader.setUniformi("u_texture1", 1);
+		}
+		bloomShader.end();
+
 		setSize(w, h);
 		setTreshold(treshold);
 		setBloomIntesity(bloomIntensity);
@@ -172,25 +179,33 @@ public class Bloom {
 		pingPongTex2 = pingPongBuffer2.getColorBufferTexture();
 
 		fullScreenQuad = createFullScreenQuad();
+		final String alpha = useBlending ? "alpha_" : "";
 
 		bloomShader = ShaderLoader.createShader("screenspace",
-				"bloom");
+				alpha + "bloom");
 
 		if (useAlphaChannelAsMask) {
 			tresholdShader = ShaderLoader.createShader("screenspace",
 					"maskedtreshold");
 		} else {
 			tresholdShader = ShaderLoader.createShader("screenspace",
-					"treshold");
+					alpha + "treshold");
 		}
 
 		blurShader = ShaderLoader.createShader("blurspace",
-				"gaussian");
+				alpha + "gaussian");
 
 		setSize(FBO_W, FBO_H);
 		setBloomIntesity(2.5f);
 		setOriginalIntesity(0.8f);
 		setTreshold(0.5f);
+
+		bloomShader.begin();
+		{
+			bloomShader.setUniformi("u_texture0", 0);
+			bloomShader.setUniformi("u_texture1", 1);
+		}
+		bloomShader.end();
 	}
 
 	/**
@@ -263,8 +278,6 @@ public class Bloom {
 		original.bind(0);
 		bloomShader.begin();
 		{
-			bloomShader.setUniformi("u_texture0", 0);
-			bloomShader.setUniformi("u_texture1", 1);
 			fullScreenQuad.render(bloomShader, GL20.GL_TRIANGLE_FAN);
 		}
 		bloomShader.end();
@@ -297,7 +310,6 @@ public class Bloom {
 			{
 				blurShader.begin();
 				{
-					// blurShader.setUniformi("u_texture", 0);
 					blurShader.setUniformf("dir", 1f, 0f);
 					fullScreenQuad.render(blurShader, GL20.GL_TRIANGLE_FAN, 0,
 							4);
@@ -312,7 +324,6 @@ public class Bloom {
 			{
 				blurShader.begin();
 				{
-					// blurShader.setUniformi("u_texture", 0);
 					blurShader.setUniformf("dir", 0f, 1f);
 
 					fullScreenQuad.render(blurShader, GL20.GL_TRIANGLE_FAN, 0,
@@ -368,8 +379,8 @@ public class Bloom {
 		this.treshold = treshold;
 		tresholdShader.begin();
 		{
-			tresholdShader.setUniformf("treshold", treshold);
-			tresholdShader.setUniformf("tresholdD", (1f / (1 - treshold)));
+			tresholdShader.setUniformf("treshold", treshold,
+					1f / (1 - treshold));
 		}
 		tresholdShader.end();
 	}

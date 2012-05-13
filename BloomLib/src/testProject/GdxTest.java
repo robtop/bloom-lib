@@ -31,7 +31,7 @@ public class GdxTest extends ApplicationAdapter {
 		camController.update(Gdx.graphics.getDeltaTime());
 		Gdx.gl.glEnable(GL10.GL_DEPTH_TEST);
 		Gdx.gl.glEnable(GL10.GL_CULL_FACE);
-		Gdx.gl.glCullFace(GL10.GL_BACK);		
+		Gdx.gl.glCullFace(GL10.GL_BACK);
 		Gdx.gl.glDepthMask(true);
 
 		bloom.capture();
@@ -63,7 +63,7 @@ public class GdxTest extends ApplicationAdapter {
 		texture.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 		shader = ShaderLoader.createShader("default", "default");
 
-		bloom = new Bloom();
+		bloom = new Bloom(256, 256, true, true, true);
 	}
 
 	public void dispose() {
